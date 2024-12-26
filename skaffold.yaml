@@ -1,0 +1,58 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - infra/k8s/*
+build:
+  local:
+    push: false
+  artifacts:
+    - image: hanishdev/node_microservices_tutorial_react_vite_client_dev
+      context: client
+      docker:
+        dockerfile: client/Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.{js,jsx,ts,tsx}'
+            dest: .
+    - image: hanishdev/node_microservices_tutorial_posts
+      context: posts
+      docker:
+        dockerfile: posts/Dockerfile
+      sync:
+        manual:
+          - src: '*.{js,jsx,ts,tsx}'
+            dest: .
+    - image: hanishdev/node_microservices_tutorial_comments
+      context: comments
+      docker:
+        dockerfile: comments/Dockerfile
+      sync:
+        manual:
+          - src: '*.{js,jsx,ts,tsx}'
+            dest: .
+    - image: hanishdev/node_microservices_tutorial_query
+      context: query
+      docker:
+        dockerfile: query/Dockerfile
+      sync:
+        manual:
+          - src: '*.{js,jsx,ts,tsx}'
+            dest: .
+    - image: hanishdev/node_microservices_tutorial_moderation
+      context: moderation
+      docker:
+        dockerfile: moderation/Dockerfile
+      sync:
+        manual:
+          - src: '*.{js,jsx,ts,tsx}'
+            dest: .
+    - image: hanishdev/node_microservices_tutorial_event-bus
+      context: event-bus
+      docker:
+        dockerfile: event-bus/Dockerfile
+      sync:
+        manual:
+          - src: '*.{js,jsx,ts,tsx}'
+            dest: .

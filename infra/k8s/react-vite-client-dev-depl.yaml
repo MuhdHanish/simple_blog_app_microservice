@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-vite-client-dev-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: react-vite-client-dev
+  template:
+    metadata:
+      labels:
+        app: react-vite-client-dev
+    spec:
+      containers:
+        - name: react-vite-client-dev
+          image: hanishdev/node_microservices_tutorial_react_vite_client_dev
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: react-vite-client-dev-srv
+spec:
+  selector:
+    app: react-vite-client-dev
+  ports:
+    - name: react-vite-client-dev
+      protocol: TCP
+      port: 5173
+      targetPort: 5173
